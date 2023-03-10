@@ -1,4 +1,4 @@
-package ouanfunction
+package directoryfunc
 import (
 	"os"
 	"fmt"

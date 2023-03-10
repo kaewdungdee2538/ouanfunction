@@ -1,4 +1,4 @@
-package ouanfunction
+package time
 
 import (
 	"fmt"

@@ -1,4 +1,4 @@
-package ouanfunction
+package uuid
 
 import (
 	"fmt"
