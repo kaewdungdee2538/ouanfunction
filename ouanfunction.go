@@ -1,6 +1,9 @@
 package ouanfunction
 
+import (
+	"github.com/kaewdungdee2538/ouanfunction/qrcode"
+)
 
-func main(){
-	
+func ConvertStringQrCodeToByte(qrText string) []byte{
+	return qrcode.GenerateQrCodeToBytes(qrText)
 }
