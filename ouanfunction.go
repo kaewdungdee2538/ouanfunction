@@ -1,5 +1,7 @@
 package ouanfunction
 
-func main() {
+import "fmt"
 
+func main() {
+	fmt.Println("Ouan function")
 }
