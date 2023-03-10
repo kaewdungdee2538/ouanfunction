@@ -1,4 +1,4 @@
-package formatString
+package ouanfunction
 
 import (
 	"fmt"

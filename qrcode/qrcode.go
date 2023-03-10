@@ -1,4 +1,4 @@
-package qrcode
+package ouanfunction
 
 import qrcode "github.com/skip2/go-qrcode"
 
