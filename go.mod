@@ -1,4 +1,4 @@
-module gitgub.com/kaewdungdee2538/ouanfunction
+module github.com/kaewdungdee2538/ouanfunction
 
 go 1.16
 
