@@ -1,4 +1,4 @@
-package db
+package dbPg
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ func GetDB() *gorm.DB {
 	return db
 }
 
-func SetupDB(dbHost string,dbUserName string,dbPassword string,dbName string,dbPort string) {
+func SetupDB(dbHost string, dbUserName string, dbPassword string, dbName string, dbPort string) {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Bangkok", dbHost, dbUserName, dbPassword, dbName, dbPort)
 	// fmt.Println(dsn)
 	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
