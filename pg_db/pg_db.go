@@ -58,7 +58,7 @@ func SaveTransactionDB(db *gorm.DB,query string, value map[string]interface{}) e
 	}
 }
 
-func GetTransactionDB(db *gorm.DB,query string, result interface{}, value interface{}) error {
+func GetTransactionWithValueDB(db *gorm.DB,query string, result interface{}, value interface{}) error {
 	tx := db.Begin()
 	defer func() {
 		if r := recover(); r != nil {
@@ -71,6 +71,42 @@ func GetTransactionDB(db *gorm.DB,query string, result interface{}, value interf
 
 	// Raw SQL
 	rows, err := tx.Raw(query, value).Rows()
+
+	if err != nil {
+		defer rows.Close()
+		tx.Rollback()
+		return err
+	} else {
+		defer rows.Close()
+		for rows.Next() {
+			rows.Scan(result)
+			tx.ScanRows(rows, result)
+			// do something
+		}
+
+		cmt := tx.Commit().Error
+		if cmt != nil {
+			return cmt
+		} else {
+			return nil
+		}
+	}
+}
+
+
+func GetTransactionNotalueDB(db *gorm.DB,query string, result interface{}) error {
+	tx := db.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+	if err := tx.Error; err != nil {
+		return err
+	}
+
+	// Raw SQL
+	rows, err := tx.Raw(query).Rows()
 
 	if err != nil {
 		defer rows.Close()
