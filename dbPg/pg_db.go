@@ -1,6 +1,7 @@
 package dbPg
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -8,33 +9,34 @@ import (
 	"gorm.io/gorm"
 )
 
-var db *gorm.DB
+// var db *gorm.DB
 
-func GetDB() *gorm.DB {
-	return db
-}
+// func GetDB() *gorm.DB {
+// 	return db
+// }
 
-func SetupDB(dbHost string, dbUserName string, dbPassword string, dbName string, dbPort string) {
+func SetupDB(dbHost string, dbUserName string, dbPassword string, dbName string, dbPort string) (*gorm.DB,error) {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Bangkok", dbHost, dbUserName, dbPassword, dbName, dbPort)
 	// fmt.Println(dsn)
 	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic("connect to database failed")
+		return nil,errors.New("connect to database failed")
 	}
 	sqlDB, err := database.DB()
 	if err != nil {
-		panic("get generic database failed")
+		return nil,errors.New("get generic database failed")
 	}
 	// SetMaxOpenConns sets the maximum number of open connections to the database.
 	sqlDB.SetMaxOpenConns(100)
 
 	// SetConnMaxLifetime sets the maximum amount of time a connection may be reused.
 	sqlDB.SetConnMaxLifetime(time.Hour)
-	db = database
+
+	return database,nil
 }
 
-func SaveTransactionDB(query string, value map[string]interface{}) error {
-	tx := GetDB().Begin()
+func SaveTransactionDB(db *gorm.DB,query string, value map[string]interface{}) error {
+	tx := db.Begin()
 	defer func() {
 		if r := recover(); r != nil {
 			tx.Rollback()
@@ -56,8 +58,8 @@ func SaveTransactionDB(query string, value map[string]interface{}) error {
 	}
 }
 
-func GetTransactionDB(query string, result interface{}, value interface{}) error {
-	tx := GetDB().Begin()
+func GetTransactionDB(db *gorm.DB,query string, result interface{}, value interface{}) error {
+	tx := db.Begin()
 	defer func() {
 		if r := recover(); r != nil {
 			tx.Rollback()
