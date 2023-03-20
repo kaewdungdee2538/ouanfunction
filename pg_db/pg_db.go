@@ -94,7 +94,7 @@ func GetTransactionWithValueDB(db *gorm.DB,query string, result interface{}, val
 }
 
 
-func GetTransactionNotalueDB(db *gorm.DB,query string, result interface{}) error {
+func GetTransactionNoneValueDB(db *gorm.DB,query string, result interface{}) error {
 	tx := db.Begin()
 	defer func() {
 		if r := recover(); r != nil {
