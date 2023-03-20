@@ -1,4 +1,4 @@
-package dbPg
+package pg_db
 
 import (
 	"errors"
