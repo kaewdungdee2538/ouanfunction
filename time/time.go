@@ -67,6 +67,11 @@ func CalculateBetweenTimeInAndTimeOutToDuration(timeIn time.Time, timeOut time.T
 	return timeDiff
 }
 
+func ConvertIntToDuration(durationInt int) time.Duration {
+	durationOutput := time.Duration(durationInt * int(time.Second))
+	return durationOutput
+}
+
 func ConverDurationToText(durationInput time.Duration) string {
 	minutes := durationInput.Minutes()
 	hours := minutes / 60
