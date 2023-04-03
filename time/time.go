@@ -3,6 +3,7 @@ package time
 import (
 	"fmt"
 	"math"
+	"strings"
 	"time"
 )
 
@@ -172,4 +173,14 @@ func ConvertStringDatetime(str string) string {
 	}
 	timeText := t.Format("2006-01-02 15:04:05")
 	return timeText
+}
+
+func SplitTime(str string) (string, string, string) {
+	s := strings.Split(str, ":")
+	fmt.Printf("Split Time => %s\n", s)
+	if len(s) == 3 {
+		return s[0], s[1], s[2]
+	} else {
+		return "00", "00", "00"
+	}
 }

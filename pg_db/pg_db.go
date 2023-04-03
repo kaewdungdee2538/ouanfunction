@@ -16,6 +16,10 @@ import (
 // 	return db
 // }
 
+/*
+args[0] is conMaxIdle default equal 0 is pooling all time
+args[1] is conMaxOpenConns default equal 100
+*/
 func SetupDB(dbHost string, dbUserName string, dbPassword string, dbName string, dbPort string, args ...int) (*gorm.DB, error) {
 
 	conMaxIdle := ouan_time.ConvertIntToDuration(0)
