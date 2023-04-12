@@ -101,6 +101,26 @@ func IsNotEmailFormat(str string) bool {
 	return err != nil
 }
 
+func IsNotFormatYear(str string) bool {
+	if _, err := time.Parse("2006", str); err != nil {
+		if _, err := time.Parse("2006", str); err != nil {
+			return true
+		}
+		return false
+	}
+	return false
+}
+
+func IsNotFormatMonth(str string) bool {
+	if _, err := time.Parse("2006-01", str); err != nil {
+		if _, err := time.Parse("2006-01", str); err != nil {
+			return true
+		}
+		return false
+	}
+	return false
+}
+
 func IsNotFormatDate(str string) bool {
 	if _, err := time.Parse("2006-01-02", str); err != nil {
 		if _, err := time.Parse("2006-01-02", str); err != nil {
