@@ -15,6 +15,32 @@ func ConvertDatetimeToDateString(timeInput time.Time) string {
 	return timeInput.Format("2006-01-02")
 }
 
+
+func ConvertStringToNewDateTimeFormat(str string) string {
+
+	if newTime,err := ConvertStringToDateTimeAndError(str);err==nil{
+		return newTime.Format("02/01/2006 15:04:05")
+	}else{
+		return str
+	}
+
+}
+
+func ConvertStringToDateTimeAndError(str string) (time.Time,error) {
+	layout := "2006-01-02 15:04:05"
+	t, err := time.Parse(layout, str)
+	if err != nil {
+		layout2 := "2006-01-02 15:04:05"
+		t2, err := time.Parse(layout2, str)
+		if err != nil {
+			fmt.Println(err)
+			return time.Now(),err
+		}
+		return t2,nil
+	}
+	return t,nil
+}
+
 func ConvertStringToDateTime(str string) time.Time {
 	layout := "2006-01-02 15:04:05"
 	t, err := time.Parse(layout, str)
