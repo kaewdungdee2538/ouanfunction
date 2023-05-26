@@ -8,9 +8,9 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func ConnectDB() (*mongo.Client, error) {
+func ConnectDB(uri string) (*mongo.Client, error) {
 	// Set up the MongoDB client options
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+	clientOptions := options.Client().ApplyURI(uri)
 
 	// Connect to the MongoDB server
 	client, err := mongo.Connect(context.Background(), clientOptions)
@@ -42,7 +42,7 @@ func CreateConnectionPool(uri string, maxConnections int) (*mongo.Client, error)
 	}
 
 	// Set the maximum number of connections in the pool
-	
+
 	// Connection successful
 	fmt.Println("Connected to MongoDB successful")
 
@@ -82,12 +82,12 @@ func InsertMany(client *mongo.Client, dbName string, collectionName string, docu
 	return result, nil
 }
 
-func FindData(client *mongo.Client, dbName string, collectionName string, filter interface{}) ([]interface{}, error) {
+func FindData(client *mongo.Client, dbName string, collectionName string, filter interface{}) ([]map[string]interface{}, error) {
 	// Access  from the client
 	collection := client.Database(dbName).Collection(collectionName)
 
 	// Define an empty slice to store the results
-	var results []interface{}
+	var results []map[string]interface{}
 
 	// Find documents based on the filter
 	cursor, err := collection.Find(context.Background(), filter)
@@ -100,7 +100,7 @@ func FindData(client *mongo.Client, dbName string, collectionName string, filter
 
 	// Iterate through the cursor and append the documents to the results slice
 	for cursor.Next(context.Background()) {
-		var document interface{}
+		var document map[string]interface{}
 		err := cursor.Decode(&document)
 		if err != nil {
 			return nil, err
