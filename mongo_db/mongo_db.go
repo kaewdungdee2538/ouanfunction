@@ -24,7 +24,6 @@ func ConnectDB(uri string) (*mongo.Client, error) {
 	return client, nil
 }
 
-
 func CreateConnectionPool(uri string, maxConnections int) (*mongo.Client, error) {
 	// Set up the MongoDB client options
 	clientOptions := options.Client().ApplyURI(uri)
@@ -48,7 +47,6 @@ func CreateConnectionPool(uri string, maxConnections int) (*mongo.Client, error)
 
 	return client, nil
 }
-
 
 func CloseDb(client *mongo.Client) error {
 	err := client.Disconnect(context.Background())
@@ -82,31 +80,24 @@ func InsertMany(client *mongo.Client, dbName string, collectionName string, docu
 	return result, nil
 }
 
-func FindData(client *mongo.Client, dbName string, collectionName string, filter interface{}) ([]map[string]interface{}, error) {
+// the result parameter is address
+func FindData(client *mongo.Client, dbName string, collectionName string, filter interface{}, result interface{}) error {
 	// Access  from the client
 	collection := client.Database(dbName).Collection(collectionName)
 
-	// Define an empty slice to store the results
-	var results []map[string]interface{}
-
-	// Find documents based on the filter
-	cursor, err := collection.Find(context.Background(), filter)
-
-	// defer CloseDb(client)
-
+	cur, err := collection.Find(context.TODO(), filter)
 	if err != nil {
-		return nil, err
+		return err
+	}
+	defer cur.Close(context.TODO())
+	// get data array to slice
+	err = cur.All(context.TODO(), result)
+
+	res := result
+	fmt.Println(res)
+	if err != nil {
+		return err
 	}
 
-	// Iterate through the cursor and append the documents to the results slice
-	for cursor.Next(context.Background()) {
-		var document map[string]interface{}
-		err := cursor.Decode(&document)
-		if err != nil {
-			return nil, err
-		}
-		results = append(results, document)
-	}
-
-	return results, nil
+	return nil
 }
