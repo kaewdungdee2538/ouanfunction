@@ -25,6 +25,11 @@ func CalculateTotalFeeToKsherFee(totalFee float64) int {
 	return int(total)
 }
 
+func CalculateKsherFeeToTotalFee(ksherFee int) float64 {
+	total := ksherFee / 100
+	return float64(total)
+}
+
 func GetKsherMsgFromErrorCode(errCode string, errMsg string) string {
 	errCodeUpperCase := strings.ToUpper(errCode)
 	switch errCodeUpperCase {
