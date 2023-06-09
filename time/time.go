@@ -15,18 +15,17 @@ func ConvertDatetimeToDateString(timeInput time.Time) string {
 	return timeInput.Format("2006-01-02")
 }
 
-
 func ConvertStringToNewDateTimeFormat(str string) string {
 
-	if newTime,err := ConvertStringToDateTimeAndError(str);err==nil{
+	if newTime, err := ConvertStringToDateTimeAndError(str); err == nil {
 		return newTime.Format("02/01/2006 15:04:05")
-	}else{
+	} else {
 		return str
 	}
 
 }
 
-func ConvertStringToDateTimeAndError(str string) (time.Time,error) {
+func ConvertStringToDateTimeAndError(str string) (time.Time, error) {
 	layout := "2006-01-02 15:04:05"
 	t, err := time.Parse(layout, str)
 	if err != nil {
@@ -34,11 +33,11 @@ func ConvertStringToDateTimeAndError(str string) (time.Time,error) {
 		t2, err := time.Parse(layout2, str)
 		if err != nil {
 			fmt.Println(err)
-			return time.Now(),err
+			return time.Now(), err
 		}
-		return t2,nil
+		return t2, nil
 	}
-	return t,nil
+	return t, nil
 }
 
 func ConvertStringToDateTime(str string) time.Time {
@@ -209,4 +208,12 @@ func SplitTime(str string) (string, string, string) {
 	} else {
 		return "00", "00", "00"
 	}
+}
+
+func ConvertSecondsToMinutes(sec int) int {
+	return int(math.Ceil(float64(sec) / 60))
+}
+
+func ConvertMinutesToHours(sec int) int {
+	return int(math.Ceil(float64(sec) / 60))
 }
