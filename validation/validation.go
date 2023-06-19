@@ -176,7 +176,7 @@ func IsDateTimeStartAndDateTimeEndDiffOver31Days(str_start string, str_end strin
 	subtract := dateEnd.Sub(dateStart)
 	hours := subtract.Hours()
 	days := hours / 24
-	if days > 31{
+	if days > 32{
 		return true
 	}
 	return false
