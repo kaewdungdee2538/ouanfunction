@@ -170,6 +170,13 @@ func IsEmailValid(email string) bool {
 	return err == nil
 }
 
+
+func IsDateTimeStartAfterDateTimeEnd(str_start string, str_end string) bool {
+	datetime_start, _ := time.Parse("2006-01-02 15:04:05", str_start)
+	datetime_end, _ := time.Parse("2006-01-02 15:04:05", str_end)
+	return datetime_start.After(datetime_end)
+}
+
 func IsDateTimeStartAndDateTimeEndDiffOver31Days(str_start string, str_end string) bool {
 	dateStart := _time.ConvertStringToDateTime(str_start)
 	dateEnd := _time.ConvertStringToDateTime(str_end)
