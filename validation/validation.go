@@ -5,7 +5,8 @@ import (
 	"net/mail"
 	"strings"
 	"time"
-	_time "github.com/kaewdungdee2538/ouanfunction/time" 
+
+	_time "github.com/kaewdungdee2538/ouanfunction/time"
 )
 
 func IsNotStringAlphabet(str string) bool {
@@ -169,14 +170,49 @@ func IsEmailValid(email string) bool {
 	return err == nil
 }
 
-
 func IsDateTimeStartAndDateTimeEndDiffOver31Days(str_start string, str_end string) bool {
 	dateStart := _time.ConvertStringToDateTime(str_start)
 	dateEnd := _time.ConvertStringToDateTime(str_end)
 	subtract := dateEnd.Sub(dateStart)
 	hours := subtract.Hours()
 	days := hours / 24
-	if days > 32{
+	if days > 32 {
+		return true
+	}
+	return false
+}
+
+func IsDateTimeStartAndDateTimeEndDiffOver3Months(str_start string, str_end string) bool {
+	dateStart := _time.ConvertStringToDateTime(str_start)
+	dateEnd := _time.ConvertStringToDateTime(str_end)
+	subtract := dateEnd.Sub(dateStart)
+	hours := subtract.Hours()
+	days := hours / 24
+	if days > 93 {
+		return true
+	}
+	return false
+}
+
+func IsDateTimeStartAndDateTimeEndDiffOver6Months(str_start string, str_end string) bool {
+	dateStart := _time.ConvertStringToDateTime(str_start)
+	dateEnd := _time.ConvertStringToDateTime(str_end)
+	subtract := dateEnd.Sub(dateStart)
+	hours := subtract.Hours()
+	days := hours / 24
+	if days > 186 {
+		return true
+	}
+	return false
+}
+
+func IsDateTimeStartAndDateTimeEndDiffOver1Year(str_start string, str_end string) bool {
+	dateStart := _time.ConvertStringToDateTime(str_start)
+	dateEnd := _time.ConvertStringToDateTime(str_end)
+	subtract := dateEnd.Sub(dateStart)
+	hours := subtract.Hours()
+	days := hours / 24
+	if days > 366 {
 		return true
 	}
 	return false
