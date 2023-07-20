@@ -31,3 +31,18 @@ func (a *JSON) Scan(value interface{}) error {
 
 	return json.Unmarshal(b, &a)
 }
+
+func ConvertInterfaceToJSON(obj map[string]interface{}) (bool, string) {
+	obj_result, err := json.Marshal(obj)
+	if err != nil {
+		//--------create error log
+		return true, ""
+	}
+	return false, string(obj_result)
+}
+
+func JsonBytesToMap(jsonBytes []byte) map[string]interface{} {
+	result := make(map[string]interface{})
+	json.Unmarshal(jsonBytes, &result)
+	return result
+}
