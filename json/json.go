@@ -1,4 +1,4 @@
-package jsonUtil
+package json
 
 import (
 	"database/sql/driver"
@@ -45,4 +45,13 @@ func JsonBytesToMap(jsonBytes []byte) map[string]interface{} {
 	result := make(map[string]interface{})
 	json.Unmarshal(jsonBytes, &result)
 	return result
+}
+
+// ---------------------------------------------------------------------------------------------------------------//
+func PrettyStructJson(data interface{}) (string, error) {
+	val, err := json.MarshalIndent(data, "", "    ")
+	if err != nil {
+		return "", err
+	}
+	return string(val), nil
 }

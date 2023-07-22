@@ -3,6 +3,7 @@ package formatString
 import (
 	"fmt"
 	"time"
+	"strings"
 )
 
 func ConvertStringDatetime(str string) string {
@@ -20,4 +21,21 @@ func ConvertStringDatetime(str string) string {
 	}
 	timeText := t.Format("2006-01-02 15:04:05")
 	return timeText
+}
+
+func StringToCamelCase(inputString string) string {
+	words := strings.Fields(inputString)
+	if len(words) == 0 {
+		return ""
+	}
+
+	camelCase := strings.ToLower(words[0])
+	for _, word := range words[1:] {
+		if len(word) > 0 {
+			wordLower := strings.ToLower(word)
+			camelCase += strings.Title(wordLower)
+		}
+	}
+
+	return camelCase
 }

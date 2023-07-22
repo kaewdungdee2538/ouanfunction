@@ -1,14 +1,14 @@
 package log4go
 
 import (
-	"encoding/json"
 	"fmt"
 	"net"
-	"strings"
 	"time"
 
 	"github.com/alecthomas/log4go"
 	"github.com/kaewdungdee2538/ouanfunction/directoryfunc"
+	"github.com/kaewdungdee2538/ouanfunction/formatString"
+	"github.com/kaewdungdee2538/ouanfunction/json"
 )
 
 // ---------------------------------------------------------------------------------------------------------------//
@@ -110,7 +110,7 @@ func WriteLogCritical(model Log4goModel) {
 
 // ---------------------------------------------------------------------------------------------------------------//
 func createLogFormat(model Log4goModel) string {
-	dataJsonText, _ := PrettyStruct(model.Data)
+	dataJsonText, _ := json.PrettyStructJson(model.Data)
 
 	var clientAddress = ""
 	var remotePort = ""
@@ -143,7 +143,7 @@ func createLogFormat(model Log4goModel) string {
 
 // ---------------------------------------------------------------------------------------------------------------//
 func getCurrentDate(appName string) string {
-	appname := strings.ReplaceAll(appName, " ", "_")
+	appname := formatString.StringToCamelCase(appName)
 	year, month, day := time.Now().Date()
 	currentdate_str := fmt.Sprintf("%s.%v-%v-%v", appname, year, int(month), day)
 	return currentdate_str
@@ -155,13 +155,4 @@ func generateFormatLog(currentDirectory string, appName string) *log4go.FileLogW
 	flw := log4go.NewFileLogWriter(logFileName, false)
 	flw.SetFormat("[%D %T] [%L], %M")
 	return flw
-}
-
-// ---------------------------------------------------------------------------------------------------------------//
-func PrettyStruct(data interface{}) (string, error) {
-	val, err := json.MarshalIndent(data, "", "    ")
-	if err != nil {
-		return "", err
-	}
-	return string(val), nil
 }
