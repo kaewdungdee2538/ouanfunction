@@ -144,8 +144,8 @@ func createLogFormat(model Log4goModel) string {
 // ---------------------------------------------------------------------------------------------------------------//
 func getCurrentDate(appName string) string {
 	appname := formatString.StringToCamelCase(appName)
-	year, month, day := time.Now().Date()
-	currentdate_str := fmt.Sprintf("%s.%v-%v-%v", appname, year, int(month), day)
+	now := time.Now()
+	currentdate_str := fmt.Sprintf("%s.%s", appname, now.Format("2006-01-02"))
 	return currentdate_str
 }
 
