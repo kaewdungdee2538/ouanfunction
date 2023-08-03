@@ -20,7 +20,7 @@ func IsNotStringAlphabet(str string) bool {
 }
 
 func IsNotStringAlphabetRemark(str string) bool {
-	const alpha = `!@#$%^&*\[\]{};':",<>?~`
+	const alpha = `!@#$%^&*\[\]{};':",<>?~|`
 	for _, char := range str {
 		if strings.Contains(alpha, strings.ToLower(string(char))) {
 			return true
@@ -30,7 +30,7 @@ func IsNotStringAlphabetRemark(str string) bool {
 }
 
 func IsNotStringAlphabetForJSONString(str string) bool {
-	const alpha = `!@#$%^*;<>?~`
+	const alpha = `!@#$%^*;<>?~|`
 	for _, char := range str {
 		if strings.Contains(alpha, strings.ToLower(string(char))) {
 			return true
@@ -40,7 +40,7 @@ func IsNotStringAlphabetForJSONString(str string) bool {
 }
 
 func IsNotStringAlphabetForLine(str string) bool {
-	const alpha = `-!#$%^&*\[\]{};':",<>?~`
+	const alpha = `-!#$%^&*\[\]{};':",<>?~|`
 	for _, char := range str {
 		if strings.Contains(alpha, strings.ToLower(string(char))) {
 			return true
@@ -50,7 +50,7 @@ func IsNotStringAlphabetForLine(str string) bool {
 }
 
 func IsNotStringAlphabetForEmail(str string) bool {
-	const alpha = `!#$%^&*\[\]{};':",<>?~`
+	const alpha = `!#$%^&*\[\]{};':",<>?~|`
 	for _, char := range str {
 		if strings.Contains(alpha, strings.ToLower(string(char))) {
 			return true
@@ -169,7 +169,6 @@ func IsEmailValid(email string) bool {
 	_, err := mail.ParseAddress(email)
 	return err == nil
 }
-
 
 func IsDateTimeStartAfterDateTimeEnd(str_start string, str_end string) bool {
 	datetime_start, _ := time.Parse("2006-01-02 15:04:05", str_start)
