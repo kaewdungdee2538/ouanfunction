@@ -59,6 +59,16 @@ func IsNotStringAlphabetForEmail(str string) bool {
 	return false
 }
 
+func IsNotStringAlphabetForPassword(str string) bool {
+	const alpha = `-#$%^&*\[\]{};':",<>?~`
+	for _, char := range str {
+		if strings.Contains(alpha, strings.ToLower(string(char))) {
+			return true
+		}
+	}
+	return false
+}
+
 func IsNotStringAlphabetForMessageString(str string) bool {
 	const alpha = `;`
 	for _, char := range str {
