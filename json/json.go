@@ -1,9 +1,14 @@
 package json
 
 import (
+	"bytes"
 	"database/sql/driver"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io"
+
+	"github.com/gin-gonic/gin"
 )
 
 type JSON map[string]interface{}
@@ -54,4 +59,17 @@ func PrettyStructJson(data interface{}) (string, error) {
 		return "", err
 	}
 	return string(val), nil
+}
+
+func SetStructToBodyRequestForMiddleware(c *gin.Context, req interface{}) error {
+	// ---------Convert obj to json string
+	jsonData, err := json.Marshal(req)
+	if err != nil {
+		msgErr := fmt.Sprintf("Set model to body request Error : %s", err)
+		return errors.New(msgErr)
+	}
+	// -----forward request body middleware to endpoint
+	rdr2 := io.NopCloser(bytes.NewBuffer([]byte(fmt.Sprintf("%v", string(jsonData)))))
+	c.Request.Body = rdr2
+	return nil
 }
