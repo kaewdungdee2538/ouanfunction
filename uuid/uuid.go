@@ -22,3 +22,9 @@ func GenerateUuid(prefix string) (string, error) {
 	pinCode := fmt.Sprintf("%s%06d",prefix,rand.Intn(max-min+1) + min)
 	return pinCode, nil
 }
+
+func GenerateUuidWithCurrentTimeStamp() string{
+	currentTime := time.Now()
+	tmFormat := fmt.Sprintf("%02d%02d%02d%02d%02d%02d%02d", currentTime.Year(), currentTime.Month(), currentTime.Day(), currentTime.Hour(), currentTime.Minute(), currentTime.Second(),currentTime.Nanosecond())
+	return tmFormat
+}
