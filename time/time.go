@@ -217,3 +217,8 @@ func ConvertSecondsToMinutes(sec int) int {
 func ConvertMinutesToHours(sec int) int {
 	return int(math.Ceil(float64(sec) / 60))
 }
+
+func GetUnixTimestampText() string {
+	unixText := fmt.Sprint(time.Now().UnixMilli())
+	return unixText
+}
