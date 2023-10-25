@@ -39,3 +39,8 @@ func StringToCamelCase(inputString string) string {
 
 	return camelCase
 }
+
+func RemoveWhiteSpace(input string) string {
+	cleanedString := strings.Replace(input, "\u200B", "", -1)
+	return cleanedString
+}
