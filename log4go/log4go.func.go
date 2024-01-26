@@ -143,13 +143,24 @@ func createLogFormat(model Log4goModel) string {
 
 
 //----------------- new verson
-
+func WriteNewLogDebugAll(model Log4goModel, logMode string) {
+	switch logMode {
+	case "warning":
+		go WriteNewLogWarning(model)
+	case "error":
+		go WriteNewLogError(model)
+	case "critical":
+		go WriteNewLogCritical(model)
+	default:
+		go WriteNewLogInfo(model)
+	}
+}
 // info log
 func WriteNewLogInfo(model Log4goModel) {
 	log := log4go.NewDefaultLogger(log4go.INFO)
 	defer log.Close()
 	// check directory
-	currentDirectory := fmt.Sprintf(`%s/info`, model.Driectory)
+	currentDirectory := fmt.Sprintf(`%s`, model.Driectory)
 	directoryfunc.CheckDirectory(currentDirectory)
 
 	// generate file log writer formater
@@ -165,7 +176,7 @@ func WriteNewLogWarning(model Log4goModel) {
 	log := log4go.NewDefaultLogger(log4go.WARNING)
 	defer log.Close()
 	// check directory
-	currentDirectory := fmt.Sprintf(`%s/warning`, model.Driectory)
+	currentDirectory := fmt.Sprintf(`%s`, model.Driectory)
 	directoryfunc.CheckDirectory(currentDirectory)
 
 	// generate file log writer formater
@@ -181,7 +192,7 @@ func WriteNewLogError(model Log4goModel) {
 	log := log4go.NewDefaultLogger(log4go.ERROR)
 	defer log.Close()
 	// check directory
-	currentDirectory := fmt.Sprintf(`%s/error`, model.Driectory)
+	currentDirectory := fmt.Sprintf(`%s`, model.Driectory)
 	directoryfunc.CheckDirectory(currentDirectory)
 
 	// generate file log writer formater
@@ -197,7 +208,7 @@ func WriteNewLogCritical(model Log4goModel) {
 	log := log4go.NewDefaultLogger(log4go.CRITICAL)
 	defer log.Close()
 	// check directory
-	currentDirectory := fmt.Sprintf(`%s/critical`, model.Driectory)
+	currentDirectory := fmt.Sprintf(`%s`, model.Driectory)
 	directoryfunc.CheckDirectory(currentDirectory)
 
 	// generate file log writer formater
