@@ -6,6 +6,9 @@ import (
 
 type Log4goModel struct {
 	Context      *gin.Context           `json:"context" validate:"required"`
+	ClientIP     string                 `json:"clientIP" validate:"required"`
+	RequestID    string                 `json:"requestID" validate:"required"`
+	OriginPath   string                 `json:"originPath" validate:"required"`
 	AppName      string                 `json:"appName" validate:"required"`
 	Driectory    string                 `json:"driectory" validate:"required"`
 	FunctionName string                 `json:"functionName" validate:"required"`

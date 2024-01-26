@@ -108,7 +108,7 @@ func WriteLogCritical(model Log4goModel) {
 	log.Critical(logInfo)
 }
 
-// ---------------------------------------------------------------------------------------------------------------//
+// for *gin.Context
 func createLogFormat(model Log4goModel) string {
 	dataJsonText, _ := json.PrettyStructJson(model.Data)
 
@@ -137,6 +137,91 @@ func createLogFormat(model Log4goModel) string {
 	DATA => %v
 	`,
 		model.AppName, model.FunctionName, clientAddress, remotePort, fullPath, model.NodeId, model.Msg, dataJsonText,
+	)
+	return logInfo
+}
+
+
+//----------------- new verson
+
+// info log
+func WriteNewLogInfo(model Log4goModel) {
+	log := log4go.NewDefaultLogger(log4go.INFO)
+	defer log.Close()
+	// check directory
+	currentDirectory := fmt.Sprintf(`%s/info`, model.Driectory)
+	directoryfunc.CheckDirectory(currentDirectory)
+
+	// generate file log writer formater
+	flw := generateFormatLog(currentDirectory, model.AppName)
+
+	log.AddFilter("log", log4go.INFO, flw)
+	logInfo := newCreateLogFormat(model)
+	log.Info(logInfo)
+}
+
+// warning log
+func WriteNewLogWarning(model Log4goModel) {
+	log := log4go.NewDefaultLogger(log4go.WARNING)
+	defer log.Close()
+	// check directory
+	currentDirectory := fmt.Sprintf(`%s/warning`, model.Driectory)
+	directoryfunc.CheckDirectory(currentDirectory)
+
+	// generate file log writer formater
+	flw := generateFormatLog(currentDirectory, model.AppName)
+
+	log.AddFilter("log", log4go.WARNING, flw)
+	logInfo := newCreateLogFormat(model)
+	log.Warn(logInfo)
+}
+
+// error log
+func WriteNewLogError(model Log4goModel) {
+	log := log4go.NewDefaultLogger(log4go.ERROR)
+	defer log.Close()
+	// check directory
+	currentDirectory := fmt.Sprintf(`%s/error`, model.Driectory)
+	directoryfunc.CheckDirectory(currentDirectory)
+
+	// generate file log writer formater
+	flw := generateFormatLog(currentDirectory, model.AppName)
+
+	log.AddFilter("log", log4go.ERROR, flw)
+	logInfo := newCreateLogFormat(model)
+	log.Error(logInfo)
+}
+
+// critical log
+func WriteNewLogCritical(model Log4goModel) {
+	log := log4go.NewDefaultLogger(log4go.CRITICAL)
+	defer log.Close()
+	// check directory
+	currentDirectory := fmt.Sprintf(`%s/critical`, model.Driectory)
+	directoryfunc.CheckDirectory(currentDirectory)
+
+	// generate file log writer formater
+	flw := generateFormatLog(currentDirectory, model.AppName)
+
+	log.AddFilter("log", log4go.CRITICAL, flw)
+	logInfo := newCreateLogFormat(model)
+	log.Critical(logInfo)
+}
+// for 
+func newCreateLogFormat(model Log4goModel) string {
+	dataJsonText, _ := json.PrettyStructJson(model.Data)
+
+	logInfo := fmt.Sprintf(`
+	APP_NAME=> %s
+	FUNCTION_NAME => [%s] 
+	REMOTE_ADDRESS => %s
+	REMOTE_PORT => %s 
+	ORIGINALURL => %s
+	NODE_ID => %s
+	MESSAGE => [%s]
+	DATA => %v
+	`,
+		model.AppName, model.FunctionName, model.ClientIP, model.RequestID, model.OriginPath, model.NodeId, model.Msg, dataJsonText,
 	)
 	return logInfo
 }
