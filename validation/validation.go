@@ -2,6 +2,7 @@ package validation
 
 import (
 	"fmt"
+	"net"
 	"net/mail"
 	"strings"
 	"time"
@@ -233,3 +234,10 @@ func IsDateTimeStartAndDateTimeEndDiffOver1Year(str_start string, str_end string
 	}
 	return false
 }
+
+func IsValidIPAddress(ipAddress string) bool {
+	// ParseIP returns the IP address (IPv4 or IPv6) represented by the string ipAddress
+	// If ipAddress is not a valid IP address, ParseIP returns nil
+	return net.ParseIP(ipAddress) != nil
+}
+
