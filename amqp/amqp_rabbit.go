@@ -9,11 +9,10 @@ import (
 )
 
 type amqpRabbit struct {
-	ttl int
 }
 
-func NewAmqpRabbit(ttl int) amqpRabbit {
-	return amqpRabbit{ttl}
+func NewAmqpRabbit() amqpRabbit {
+	return amqpRabbit{}
 }
 
 func (amqp amqpRabbit) Connection(url string) (*amqp091.Connection, error) {
@@ -44,7 +43,7 @@ func (amqp amqpRabbit) Channel(conn *amqp091.Connection) (*amqp091.Channel, erro
 	return ch, nil
 }
 
-func (amqp amqpRabbit) SetupQueueTypeDirectExchange(ch *amqp091.Channel, queueName string, exchangeName string, routingKey string) error {
+func (amqp amqpRabbit) SetupQueueTypeDirectExchange(ch *amqp091.Channel, queueName string, exchangeName string, routingKey string, argQueue amqp091.Table) error {
 
 	exchangeType := "direct"
 
@@ -68,9 +67,7 @@ func (amqp amqpRabbit) SetupQueueTypeDirectExchange(ch *amqp091.Channel, queueNa
 		false,     // delete when unused
 		false,     // exclusive
 		false,     // no-wait
-		amqp091.Table{
-			"x-message-ttl": amqp.ttl, // Set the TTL for the queue
-		},
+		argQueue,  // argument
 	)
 	if err != nil {
 		failOnError(err, "Failed to declare a queue")
@@ -93,7 +90,7 @@ func (amqp amqpRabbit) SetupQueueTypeDirectExchange(ch *amqp091.Channel, queueNa
 	return nil
 }
 
-func (amqp amqpRabbit) SetupQueueTypeTopic(ch *amqp091.Channel, queueName string, exchangeName string, routingHeadKey string) error {
+func (amqp amqpRabbit) SetupQueueTypeTopic(ch *amqp091.Channel, queueName string, exchangeName string, routingHeadKey string, argQueue amqp091.Table) error {
 
 	exchangeType := "topic"
 	keyBindingTopic := fmt.Sprintf("%s.%s", routingHeadKey, "*")
@@ -118,9 +115,7 @@ func (amqp amqpRabbit) SetupQueueTypeTopic(ch *amqp091.Channel, queueName string
 		false,     // delete when unused
 		false,     // exclusive
 		false,     // no-wait
-		amqp091.Table{
-			"x-message-ttl": amqp.ttl, // Set the TTL for the queue
-		},
+		argQueue,  // argument
 	)
 	if err != nil {
 		failOnError(err, "Failed to declare a queue")
