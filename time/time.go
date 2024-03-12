@@ -222,3 +222,9 @@ func GetUnixTimestampText() string {
 	unixText := fmt.Sprint(time.Now().UnixMilli())
 	return unixText
 }
+
+
+func ConvertUnixTimestampToDateTime(unixTimestamp int64) string {
+	timestamp := time.Unix(unixTimestamp, 0)
+	return timestamp.Format("2006-01-02 15:04:05")
+}
