@@ -44,3 +44,10 @@ func RemoveWhiteSpace(input string) string {
 	cleanedString := strings.Replace(input, "\u200B", "", -1)
 	return cleanedString
 }
+
+
+func SetValueForWhereLikeData(input string) string {
+	likeChar := "%"
+	result := fmt.Sprintf("%s%s%s", likeChar, input, likeChar)
+	return result
+}
