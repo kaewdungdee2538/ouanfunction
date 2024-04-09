@@ -13,7 +13,7 @@ import (
 )
 
 // ----------------- verson2
-func (l Log4goLogger) WriteNewLogDebugAll(model Log4goModel, logMode string) {
+func (l Log4goLogger) WriteLog(model Log4goModel, logMode string) {
 	switch logMode {
 	case "warning":
 		go l.writeNewLogWarning(model)
