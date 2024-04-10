@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"net/mail"
+	"regexp"
 	"strings"
 	"time"
 
@@ -241,3 +242,7 @@ func IsValidIPAddress(ipAddress string) bool {
 	return net.ParseIP(ipAddress) != nil
 }
 
+func ValidateIntervalTimeFormat(text string) bool {
+	regex := regexp.MustCompile("^[0-9]{2,9}:[0-5]{1}[0-9]{1}:[0-5]{1}[0-9]{1}$")
+	return regex.MatchString(text)
+}
