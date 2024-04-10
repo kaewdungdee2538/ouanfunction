@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/alecthomas/log4go"
-	"github.com/kaewdungdee2538/ouanfunction/directoryfunc"
-	"github.com/kaewdungdee2538/ouanfunction/formatString"
-	"github.com/kaewdungdee2538/ouanfunction/json"
+	"github.com/kaewdungdee2538/ouanfunction/v2/directoryfunc"
+	"github.com/kaewdungdee2538/ouanfunction/v2/formatString"
+	"github.com/kaewdungdee2538/ouanfunction/v2/json"
 )
 
 // ----------------- verson2

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	ouan_time "github.com/kaewdungdee2538/ouanfunction/time"
+	ouan_time "github.com/kaewdungdee2538/ouanfunction/v2/time"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
