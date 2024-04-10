@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	_time "github.com/kaewdungdee2538/ouanfunction/time"
+	_time "github.com/kaewdungdee2538/ouanfunction/v2/time"
 )
 
 func IsNotStringAlphabet(str string) bool {
