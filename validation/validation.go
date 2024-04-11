@@ -246,3 +246,15 @@ func ValidateIntervalTimeFormat(text string) bool {
 	regex := regexp.MustCompile("^[0-9]{2,9}:[0-5]{1}[0-9]{1}:[0-5]{1}[0-9]{1}$")
 	return regex.MatchString(text)
 }
+
+func IsIntervalStartOverIntervalStop(startInterval, stopInterval string) (bool, error) {
+	start, err := _time.ConvertStringToDuration(startInterval)
+	if err != nil {
+		return true, err
+	}
+	stop, err := _time.ConvertStringToDuration(stopInterval)
+	if err != nil {
+		return true, err
+	}
+	return start > stop, nil
+}
