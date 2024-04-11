@@ -1,8 +1,10 @@
 package time
 
 import (
+	"errors"
 	"fmt"
 	"math"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -223,8 +225,31 @@ func GetUnixTimestampText() string {
 	return unixText
 }
 
-
 func ConvertUnixTimestampToDateTime(unixTimestamp int64) string {
 	timestamp := time.Unix(unixTimestamp, 0)
 	return timestamp.Format("2006-01-02 15:04:05")
+}
+
+func ConvertStringToDuration(timeStr string) (time.Duration, error) {
+	parts := strings.SplitN(timeStr, ":", 3)
+	if len(parts) != 3 {
+		return 0, errors.New("invalid time format (expected HHH:MM:SS)")
+	}
+
+	hours, err := strconv.Atoi(parts[0])
+	if err != nil {
+		return 0, errors.New("invalid hour format")
+	}
+
+	minutes, err := strconv.Atoi(parts[1])
+	if err != nil {
+		return 0, errors.New("invalid minute format")
+	}
+
+	seconds, err := strconv.Atoi(parts[2])
+	if err != nil {
+		return 0, errors.New("invalid second format")
+	}
+
+	return time.Duration(hours)*time.Hour + time.Duration(minutes)*time.Minute + time.Duration(seconds)*time.Second, nil
 }
