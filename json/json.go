@@ -28,11 +28,9 @@ func (a *JSON) Scan(value interface{}) error {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(string(j))
 
 	var c map[string]interface{}
 	json.Unmarshal(j, &c)
-	fmt.Println(string(j))
 
 	return json.Unmarshal(b, &a)
 }
